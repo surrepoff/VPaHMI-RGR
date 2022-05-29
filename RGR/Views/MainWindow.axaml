@@ -1,0 +1,96 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:RGR.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:RGR.Views"
+        xmlns:model="using:RGR.Models"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RGR.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="RGR">
+
+
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+
+	<Grid ShowGridLines="False">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"></RowDefinition>
+			<RowDefinition Height="1.5*"></RowDefinition>
+			<RowDefinition Height="9*"></RowDefinition>
+			<RowDefinition Height="2*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"></ColumnDefinition>
+			<ColumnDefinition Width="2"></ColumnDefinition>
+			<ColumnDefinition Width="3*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+
+		<Menu Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+			<MenuItem Header="_File">
+				<MenuItem Header="_Save" Command="{Binding OnClick}"></MenuItem>
+				<!--<MenuItem Header="_Load"></MenuItem>-->
+			</MenuItem>
+			<!--<MenuItem Header="_About"></MenuItem>-->
+		</Menu>
+
+		<GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Background="Black" ResizeDirection="Columns"></GridSplitter>
+
+		<Grid Grid.Column="0" Grid.Row="1" Background="Plum">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Tables'Requests"></TextBlock>
+		</Grid>
+
+		<ListBox Grid.Column="0" Grid.Row="2" Background="WhiteSmoke" Items="{Binding Tables}" SelectedItem="{Binding SelectedTable}" SelectionChanged="OnSelect" x:Name="myTabs">
+			<ListBox.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Vertical"/>
+				</ItemsPanelTemplate>
+			</ListBox.ItemsPanel>
+
+			<ListBox.DataTemplates>
+				<DataTemplate DataType="{x:Type model:MyQuery}">
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="{Binding TableName}" />
+						<Button Click="DeleteQuer" CommandParameter="{Binding}">
+
+							<Image Source="/Assets/close.png" Height="10"/>
+						</Button>
+					</StackPanel>
+				</DataTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding TableName}" />
+				</DataTemplate>
+			</ListBox.DataTemplates>
+		</ListBox>
+
+		<Button Grid.Column="0" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Plum" Content="Request Manager" Click="ShowQueryWindow"></Button>
+
+		<Grid Grid.Column="2" Grid.Row="1" Grid.RowSpan="3">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="12.5*"></RowDefinition>
+				<RowDefinition Height="1*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+
+			<DataGrid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Items="{Binding SelectedTable.Rows}" Background="WhiteSmoke" x:Name="dGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Visible" IsReadOnly="False">
+			</DataGrid>
+
+			<Button Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Pink" Content="Add Last Row" Command="{Binding AddRow}"></Button>
+			<Button Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Pink" Content="Delete Last Row" Command="{Binding DeleteRows}"></Button>
+		</Grid>
+
+	</Grid>
+
+</Window>
