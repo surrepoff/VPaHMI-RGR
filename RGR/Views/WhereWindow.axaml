@@ -11,7 +11,7 @@
         x:Class="RGR.Views.WhereWindow"
         Title="WhereWindow">
 
-	<Grid ColumnDefinitions="200, *, 200" Background="LightGray">
+	<Grid ColumnDefinitions="200, *, 200" Background="Pink">
 		<Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0">
 			<TreeView Background="White" Items="{Binding TargetQuery.Items}" Name="TreeView1">
 				<TreeView.DataTemplates>
